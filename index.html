@@ -4,10 +4,85 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Juego</title>
 </head>
 <body>
-    Holi
+    <div class="contenedor-pantallas">
+
+
+        <div class="pantalla" data-pantalla="0">
+            <h1>Pantalla 1</h1>
+            <button onclick="cargarPantalla(1)">Jugar</button>
+        </div>
+
+
+        <div class="pantalla" data-pantalla="1">
+            <h1>Pantalla 2</h1>
+            <button onclick="iniciarJuegoNuevo()">Comenzar</button>
+        </div>
+
+        <div class="pantalla" data-pantalla="2">
+            <h1>Pantalla 3</h1>
+
+            <div id="contenedor-medidores">
+
+                <div class="medidor">
+                    <label for="medidor-estres">Estrés</label>
+                    <meter 
+                        id="medidor-estres"
+                        min="0" max="100"
+                        optimum="0" low="15" high="85"
+                        value="40"
+                    >
+                    </meter>
+                </div>
+
+                <div class="medidor">
+                    <label for="medidor-hambre">Hambre</label>
+                    <meter 
+                        id="medidor-hambre"
+                        min="0" max="100"
+                        optimum="0" low="15" high="85"
+                        value="40"
+                    >
+                    </meter>
+                </div>
+
+                <div class="medidor">
+                    <label for="medidor-vejiga">Vejiga</label>
+                    <meter 
+                        id="medidor-vejiga"
+                        min="0" max="100"
+                        optimum="0" low="15" high="85"
+                        value="40"
+                    >
+                    </meter>
+                </div>
+
+            </div> <!--#contenedor-medidores -->
+
+
+
+            <div id="interfaz-de-juego">
+                <div class="menu menu-principal">
+                    <button onclick="abrirMenu('entretenimiento')">Entretenimiento</button>
+                    <button onclick="abrirMenu('alimento')">Alimento</button>
+                    <button onclick="accionDeJuego('irAlBaño')">Ir al baño</button>
+                </div>
+                <div class="menu menu-entretenimiento">
+                    <button onclick="accionDeJuego('jugarVideojuego')">Jugar videojuego</button>
+                    <button onclick="accionDeJuego('mirarYouTube')">Mirar YouTube</button>
+                    <button onclick="accionDeJuego('hablarPorTelefono')">Llamar a un amigo/a</button>
+                </div>
+                <div class="menu menu-alimento">
+                    <button onclick="accionDeJuego('comerComidaChatarra')">Comer comida chatarra</button>
+                    <button onclick="accionDeJuego('comerComidaSana')">Comer comida sana</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
