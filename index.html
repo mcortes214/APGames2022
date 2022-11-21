@@ -5,25 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <!-- Hacer un preload para todas las imágenes -->
     <title>Juego</title>
 </head>
 <body>
     <div class="contenedor-pantallas">
 
 
+        <!-- Títulos -->
         <div class="pantalla" data-pantalla="0">
             <h1>Pantalla 1</h1>
             <button onclick="cargarPantalla(1)">Jugar</button>
         </div>
 
 
+
+        <!-- Intro -->
         <div class="pantalla" data-pantalla="1">
             <h1>Pantalla 2</h1>
             <button onclick="iniciarJuegoNuevo()">Comenzar</button>
         </div>
 
+
+
+        <!-- Juego -->
         <div class="pantalla" data-pantalla="2">
             <h1>Pantalla 3</h1>
+
+
+            <div class="contenedor-animacion">
+                <img src="anim/ventana.gif" class="capa-animacion capa-animacion-ventana"/>
+                <img src="" class="capa-animacion capa-animacion-monitor"/>
+                <img src="anim/habitacion.gif" class="capa-animacion capa-animacion-dormitorio"/>
+                <img src="anim/animacion-trabajando.gif" class="capa-animacion capa-animacion-personaje"/>
+            </div>
+
 
             <div id="contenedor-medidores">
 

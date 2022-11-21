@@ -93,10 +93,66 @@ function reducirSaturacionNecesidad(nombre, cantidad) {
 
 
 
+//----- Módulo Animación
+
+let animationPlaying = false;
+
+const capas = {
+    'personaje': document.querySelector('.capa-animacion-personaje'),
+    'monitor': document.querySelector('.capa-animacion-monitor'),
+    'ventana': document.querySelector('.capa-animacion-ventana'),
+}
+
+const animaciones = {
+    //duración 0: no vuelve a "trabajando", queda hasta que la cambie
+    //para simplificar: crear archivos de audio y de animación incl silencios
+    'trabajando': {
+        duracion: 0,
+        archivo: 'anim/animacion-trabajando.gif',
+    },
+    'quieto': {
+        duracion: 0,
+        archivo: 'anim/animacion-quieto.gif',
+    },
+    'telefono': {
+        duracion: 1200,
+        archivo: 'anim/animacion-telefono.gif',
+    },
+    'ida': {
+        duracion: 0,
+        archivo: 'anim/animacion-ida.gif',
+    },
+    'vuelta': {
+        duracion: 1200,
+        archivo: 'anim/animacion-ida.gif',
+    },
+    'barraLlenaEstres': {
+        duracion: 0,
+        archivo: 'anim/barra-llena-estres.gif',
+    },
+    'barraLlenaHambre': {
+        duracion: 0,
+        archivo: 'anim/barra-llena-hambre.gif',
+    },
+    'barraLlenaVejiga': {
+        duracion: 0,
+        archivo: 'anim/barra-llena-vejiga.gif',
+    },
+}
+
+const colaDeAnimaciones = [];
+
+function iniciarAnimacion(capa, nombre) {
+    capas[capa].src = animaciones[nombre].archivo;
+}
+
 
 
 
 //----- Módulo Interfaz de juego y acciones
+
+// Importar Necesidades
+// Importar Animacion
 
 const contenedorControles = '#interfaz-de-juego';
 const claseMenuActivo = 'menu--activo';
@@ -162,6 +218,7 @@ function menuPrincipalActivo() {
 }
 
 function accionDeJuego(accion) {
+    //Gestionar cola de acciones y animaciones desde acá
     acciones[accion].efecto();
     if(! menuPrincipalActivo()) {
         cerrarMenusAbiertos();
@@ -197,6 +254,7 @@ function detenerTimerDia() {
 
 // importar Timers
 // importar Necesidades
+//Importar Animación
 
 let nivelActual = 0;
 
@@ -205,6 +263,7 @@ function iniciarNivel(idNivel) {
     resetearNecesidades();
     iniciarTimerPrincipal(tick);
     iniciarTimerFinalDeDia(ganarNivel);
+    iniciarAnimacion('personaje', 'trabajando');
 }
 
 function tick() {
