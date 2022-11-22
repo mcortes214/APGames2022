@@ -109,7 +109,37 @@
                     onclick="accionDeJuego('comerComidaSana')">Comer comida sana</button>
                 </div>
             </div>
+        
+        </div>
 
+        <!-- Overlays de game over -->
+
+        <div class="overlay-clickeable" data-overlay="gameover-hambre"
+        onclick="iniciarJuegoNuevo()">
+            <img src="img/gameover-hambre.png" alt="">
+        </div>
+
+        <div class="overlay-clickeable" data-overlay="gameover-estres"
+        onclick="iniciarJuegoNuevo()">
+            <img src="img/gameover-estres.png" alt="">
+        </div>
+
+        <div class="overlay-clickeable" data-overlay="gameover-vejiga"
+        onclick="iniciarJuegoNuevo()">
+            <img src="img/gameover-vejiga.png" alt="">
+        </div>
+
+        <div class="overlay-clickeable" data-overlay="evento-dia2"
+        onclick="ocultarOverlay('evento-dia2')">
+            <img src="img/evento-dia-2.png" alt="">
+        </div>
+        <div class="overlay-clickeable" data-overlay="evento-dia3"
+        onclick="ocultarOverlay('evento-dia3')">
+            <img src="img/evento-dia-3.png" alt="">
+        </div>
+        <div class="overlay-clickeable" data-overlay="victoria"
+        onclick="volverAMenu()">
+            <img src="img/victoria.png" alt="">
         </div>
     </div>
     <script src="index.js"></script>

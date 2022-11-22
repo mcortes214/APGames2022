@@ -329,12 +329,54 @@ function detenerTimerDia() {
 }
 
 
+//----- Overlays
+
+function mostrarOverlay(dataOverlay) {
+    const overlay = document.querySelector(`.overlay-clickeable[data-overlay="${dataOverlay}"]`);
+    overlay.classList.add('overlay-clickeable--activo');
+}
+
+function ocultarOverlay(dataOverlay) {
+    const overlay = document.querySelector(`.overlay-clickeable[data-overlay="${dataOverlay}"]`);
+    overlay.classList.remove('overlay-clickeable--activo');
+}
+
+function ocultarOverlays() {
+    const overlays = document.querySelectorAll(`.overlay-clickeable`);
+    for (let overlay of overlays) {
+        overlay.classList.remove('overlay-clickeable--activo');
+    }
+}
 
 //----- Index
 
 // importar Timers
 // importar Necesidades
 //Importar Animación
+
+
+let niveles = {
+    0: {
+        evento: () => {}
+    },
+    1: {
+        evento: () => {
+            incrementarNecesidad('estres', 20);
+            mostrarOverlay('evento-dia2');
+        }
+    },
+    2: {
+        evento: () => {
+            incrementarNecesidad('estres', 50);
+            mostrarOverlay('evento-dia3');
+        }
+    },
+    3: {
+        evento: () => {
+            mostrarOverlay('victoria');
+        }
+    }
+}
 
 let nivelActual = 0;
 let estados = {
@@ -377,9 +419,14 @@ function adoptarEstado(estado) {
     //filtro de color
 }
 
+function eventoDelDia(idNivel) {
+    niveles[idNivel].evento();
+}
+
 function iniciarNivel(idNivel) {
     nivelActual = idNivel;
     resetearNecesidades();
+    eventoDelDia(idNivel);
     iniciarTimerPrincipal(tick);
     iniciarTimerFinalDeDia(ganarNivel);
     iniciarAnimacion('personaje', 'trabajando');
@@ -405,7 +452,6 @@ function tick() {
 }
 
 function ganarNivel() {
-    alert('final del día');
     detenerTimerPrincipal();
     detenerTimerDia();
     nivelActual++;
@@ -413,15 +459,24 @@ function ganarNivel() {
 }
 
 function perderNivel(causa) {
-    alert('perdiste! causa:', causa);
+    // alert('perdiste! causa:', causa);
+    mostrarOverlay(`gameover-${causa}`);
     detenerTimerPrincipal();
     detenerTimerDia();
 }
 
+function volverAMenu() {
+    iniciarNivel(0);
+    detenerTimerPrincipal();
+    detenerTimerDia();
+    cargarPantalla(0);
+    ocultarOverlays();
+}
 
 function iniciarJuegoNuevo() {
     cargarPantalla(2);
     iniciarNivel(0);
+    ocultarOverlays();
 }
 
 //-- Ejecutar al inicio

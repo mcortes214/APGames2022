@@ -51,6 +51,22 @@ body {
     position: relative;
 }
 
+#contenedor-medidores {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8em;
+}
+
+#contenedor-medidores meter {
+    padding-left: 10px;
+    width: 80%;
+}
+
 .capa-animacion{
     width: 100%;
     height: 100%;
@@ -141,7 +157,18 @@ body {
     position: absolute;
     bottom: 30px;
     left: 50%;
-    transform: translateX(-50%);}
+    transform: translateX(-50%);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 1.2em;
+    padding: 5px 1em;
+    background: transparent;
+    cursor: pointer;
+}
+
+.floating-button:hover {
+    opacity: 0.6;
+}
 
 .boton-accion {
     width: 32.5%;
@@ -158,4 +185,27 @@ body {
 
 .boton-accion:disabled {
     opacity: 0.5;
+}
+
+.overlay-clickeable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    cursor: pointer;
+    width: 500px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.overlay-clickeable > img {
+    width: 80%;
+}
+
+.overlay-clickeable.overlay-clickeable--activo {
+    opacity: 1;
+    pointer-events: all;
 }
