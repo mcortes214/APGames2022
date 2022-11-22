@@ -14,28 +14,33 @@
 
         <!-- Títulos -->
         <div class="pantalla" data-pantalla="0">
-            <h1>Pantalla 1</h1>
-            <button onclick="cargarPantalla(1)">Jugar</button>
+            <div class="abs-container">
+                <img class="fullscreen" src="anim/titulos.gif" alt="">
+                <!-- TODO: posicionarlo bien -->
+                <button class="floating-button" onclick="cargarPantalla(1)">Jugar</button>                
+            </div>
         </div>
 
 
 
         <!-- Intro -->
         <div class="pantalla" data-pantalla="1">
-            <h1>Pantalla 2</h1>
-            <button onclick="iniciarJuegoNuevo()">Comenzar</button>
+            <div class="info-box">
+                <div class="info-clip-box">
+                     <img src="img/info.png" alt="" class="info-text">
+                </div>
+            </div>
+                <button class="floating-button" onclick="iniciarJuegoNuevo()">Comenzar</button>
+
         </div>
 
 
 
         <!-- Juego -->
         <div class="pantalla" data-pantalla="2">
-            <h1>Pantalla 3</h1>
-
-
             <div class="contenedor-animacion">
                 <img src="anim/ventana.gif" class="capa-animacion capa-animacion-ventana"/>
-                <img src="" class="capa-animacion capa-animacion-monitor"/>
+                <img src="anim/youtube.gif" class="capa-animacion-monitor"/>
                 <img src="anim/habitacion.gif" class="capa-animacion capa-animacion-dormitorio"/>
                 <img src="anim/animacion-trabajando.gif" class="capa-animacion capa-animacion-personaje"/>
             </div>
@@ -82,18 +87,26 @@
 
             <div id="interfaz-de-juego">
                 <div class="menu menu-principal">
-                    <button onclick="abrirMenu('entretenimiento')">Entretenimiento</button>
-                    <button onclick="abrirMenu('alimento')">Alimento</button>
-                    <button onclick="accionDeJuego('irAlBaño')">Ir al baño</button>
+                    <button class="boton-accion" style="--b: url('img/boton-entretenimiento.png')"
+                     onclick="abrirMenu('entretenimiento')">Entretenimiento</button>
+                    <button class="boton-accion" style="--b: url('img/boton-comida.png')"
+                     onclick="abrirMenu('alimento')">Alimento</button>
+                    <button class="boton-accion" style="--b: url('img/boton-baño.png')" 
+                    onclick="accionDeJuego('irAlBaño')">Ir al baño</button>
                 </div>
                 <div class="menu menu-entretenimiento">
-                    <button onclick="accionDeJuego('jugarVideojuego')">Jugar videojuego</button>
-                    <button onclick="accionDeJuego('mirarYouTube')">Mirar YouTube</button>
-                    <button onclick="accionDeJuego('hablarPorTelefono')">Llamar a un amigo/a</button>
+                    <button class="boton-accion" style="--b: url('img/boton-videojuego.png')"
+                    onclick="accionDeJuego('jugarVideojuego')">Jugar videojuego</button>
+                    <button class="boton-accion" style="--b: url('img/boton-videos.png')"
+                    onclick="accionDeJuego('mirarYouTube')">Mirar YouTube</button>
+                    <button class="boton-accion" style="--b: url('img/boton-llamar.png')"
+                    onclick="accionDeJuego('hablarPorTelefono')">Llamar a un amigo/a</button>
                 </div>
                 <div class="menu menu-alimento">
-                    <button onclick="accionDeJuego('comerComidaChatarra')">Comer comida chatarra</button>
-                    <button onclick="accionDeJuego('comerComidaSana')">Comer comida sana</button>
+                    <button class="boton-accion" style="--b: url('img/boton-chatarra.png')"
+                    onclick="accionDeJuego('comerComidaChatarra')">Comer comida chatarra</button>
+                    <button class="boton-accion" style="--b: url('img/boton-saludable.png')"
+                    onclick="accionDeJuego('comerComidaSana')">Comer comida sana</button>
                 </div>
             </div>
 

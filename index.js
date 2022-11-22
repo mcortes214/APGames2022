@@ -136,6 +136,15 @@ const animaciones = {
     'barraLlenaVejiga': {
         archivo: 'anim/barra-llena-vejiga.gif',
     },
+    'youtube': {
+        archivo: 'anim/youtube.gif',
+    },
+    'gaming': {
+        archivo: 'anim/gaming.gif',
+    },
+    'coding': {
+        archivo: 'anim/coding.gif',
+    },
 }
 
 const colaDeAnimaciones = [];
@@ -215,8 +224,8 @@ const acciones = {
         },
         proceso: () => {
             return new Promise((resolve)=>{
-                iniciarAnimacion('personaje', 'quieto');
-                // iniciarAnimacion('pantalla', 'youtube');
+                iniciarAnimacion('personaje', 'trabajando');
+                iniciarAnimacion('monitor', 'gaming');
                 setTimeout(() => {resolve()}, 10000);
             });
         }
@@ -228,7 +237,7 @@ const acciones = {
         proceso: () => {
             return new Promise((resolve)=>{
                 iniciarAnimacion('personaje', 'quieto');
-                // iniciarAnimacion('pantalla', 'youtube');
+                iniciarAnimacion('monitor', 'youtube');
                 setTimeout(() => {resolve()}, 10000);
             });
         }
@@ -293,6 +302,7 @@ function accionDeJuego(accion) {
         realizandoAccion = false;
         habilitarBotones();
         iniciarAnimacion('personaje', 'trabajando');
+        iniciarAnimacion('monitor', 'coding');
     });
 }
 
@@ -373,6 +383,7 @@ function iniciarNivel(idNivel) {
     iniciarTimerPrincipal(tick);
     iniciarTimerFinalDeDia(ganarNivel);
     iniciarAnimacion('personaje', 'trabajando');
+    iniciarAnimacion('monitor', 'coding');
 }
 
 function tick() {
