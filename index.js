@@ -172,7 +172,7 @@ const acciones = {
         efecto: () => {
             saturarNecesidad({nombre: 'hambre', horas: 1});
             incrementarNecesidad('vejiga', 20);
-            reducirNecesidad('hambre', 10);
+            reducirNecesidad('hambre', 15);
         },
         proceso: () => {
             return new Promise((resolve)=>{
@@ -189,7 +189,7 @@ const acciones = {
         efecto: () => {
             saturarNecesidad({nombre: 'hambre', horas: 6});
             incrementarNecesidad('vejiga', 20);
-            reducirNecesidad('hambre', 10);
+            reducirNecesidad('hambre', 30);
         },
         proceso: () => {
             return new Promise((resolve)=>{
@@ -348,6 +348,23 @@ function ocultarOverlays() {
     }
 }
 
+
+//Audio
+
+const audios = {
+    'intro': document.querySelector('.audio-intro'),
+    'game': document.querySelector('.audio-game'),
+    'end': document.querySelector('.audio-end'),
+}
+
+function reproducirAudio(id) {
+    for (let audio in audios) {
+        audios[audio].pause();
+        audios[audio].currentTime = 0;
+    }
+    audios[id].play();
+}
+
 //----- Index
 
 // importar Timers
@@ -435,7 +452,7 @@ function iniciarNivel(idNivel) {
 
 function tick() {
     for (let necesidad in necesidades) {
-        acumularNecesidad(necesidad, 1);
+        acumularNecesidad(necesidad, 1 + nivelActual * 0.35);
         reducirSaturacionNecesidad(necesidad, 0.5);
     }
     let estado = evaluarEstado().estado;
@@ -463,6 +480,7 @@ function perderNivel(causa) {
     mostrarOverlay(`gameover-${causa}`);
     detenerTimerPrincipal();
     detenerTimerDia();
+    reproducirAudio('end');
 }
 
 function volverAMenu() {
@@ -474,9 +492,15 @@ function volverAMenu() {
 }
 
 function iniciarJuegoNuevo() {
+    reproducirAudio('game');
     cargarPantalla(2);
     iniciarNivel(0);
     ocultarOverlays();
+}
+
+function irAInfo(){
+    cargarPantalla(1);
+    reproducirAudio('intro');
 }
 
 //-- Ejecutar al inicio

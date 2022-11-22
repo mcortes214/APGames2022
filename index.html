@@ -17,7 +17,7 @@
             <div class="abs-container">
                 <img class="fullscreen" src="anim/titulos.gif" alt="">
                 <!-- TODO: posicionarlo bien -->
-                <button class="floating-button" onclick="cargarPantalla(1)">Jugar</button>                
+                <button class="floating-button" onclick="irAInfo()">Jugar</button>                
             </div>
         </div>
 
@@ -91,7 +91,7 @@
                      onclick="abrirMenu('entretenimiento')">Entretenimiento</button>
                     <button class="boton-accion" style="--b: url('img/boton-comida.png')"
                      onclick="abrirMenu('alimento')">Alimento</button>
-                    <button class="boton-accion" style="--b: url('img/boton-baño.png')" 
+                    <button class="boton-accion" style="--b: url('img/boton-bano.png')" 
                     onclick="accionDeJuego('irAlBaño')">Ir al baño</button>
                 </div>
                 <div class="menu menu-entretenimiento">
@@ -142,6 +142,11 @@
             <img src="img/victoria.png" alt="">
         </div>
     </div>
+
+    <audio loop class="audio audio-intro" src="audio/intro.mp3"></audio>
+    <audio loop class="audio audio-game" src="audio/game.mp3"></audio>
+    <audio loop class="audio audio-end" src="audio/end.mp3"></audio>
+
     <script src="index.js"></script>
 </body>
 </html>
