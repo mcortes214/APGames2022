@@ -107,35 +107,33 @@ const animaciones = {
     //duración 0: no vuelve a "trabajando", queda hasta que la cambie
     //para simplificar: crear archivos de audio y de animación incl silencios
     'trabajando': {
-        duracion: 0,
         archivo: 'anim/animacion-trabajando.gif',
     },
     'quieto': {
-        duracion: 0,
         archivo: 'anim/animacion-quieto.gif',
     },
     'telefono': {
-        duracion: 1200,
         archivo: 'anim/animacion-telefono.gif',
     },
     'ida': {
-        duracion: 0,
         archivo: 'anim/animacion-ida.gif',
     },
     'vuelta': {
-        duracion: 1200,
-        archivo: 'anim/animacion-ida.gif',
+        archivo: 'anim/animacion-vuelta.gif',
+    },
+    'comidaChatarra': {
+        archivo: 'anim/animacion-comida-chatarra.gif',
+    },
+    'comidaSana': {
+        archivo: 'anim/animacion-comida-sana.gif',
     },
     'barraLlenaEstres': {
-        duracion: 0,
         archivo: 'anim/barra-llena-estres.gif',
     },
     'barraLlenaHambre': {
-        duracion: 0,
         archivo: 'anim/barra-llena-hambre.gif',
     },
     'barraLlenaVejiga': {
-        duracion: 0,
         archivo: 'anim/barra-llena-vejiga.gif',
     },
 }
@@ -157,6 +155,7 @@ function iniciarAnimacion(capa, nombre) {
 const contenedorControles = '#interfaz-de-juego';
 const claseMenuActivo = 'menu--activo';
 const claseMenuPrincipal = 'menu-principal';
+let realizandoAccion = false;
 
 // Lista de acciones realizables a través de la interfaz
 const acciones = {
@@ -165,6 +164,16 @@ const acciones = {
             saturarNecesidad({nombre: 'hambre', horas: 1});
             incrementarNecesidad('vejiga', 20);
             reducirNecesidad('hambre', 10);
+        },
+        proceso: () => {
+            return new Promise((resolve)=>{
+                iniciarAnimacion('personaje', 'ida');
+                setTimeout(() => {
+                    iniciarAnimacion('personaje', 'comidaChatarra');
+                    //reproducirAudio('baño');
+                }, 4000);
+                setTimeout(() => {resolve()}, 8200);
+            });
         }
     },
     'comerComidaSana': {
@@ -172,28 +181,68 @@ const acciones = {
             saturarNecesidad({nombre: 'hambre', horas: 6});
             incrementarNecesidad('vejiga', 20);
             reducirNecesidad('hambre', 10);
+        },
+        proceso: () => {
+            return new Promise((resolve)=>{
+                iniciarAnimacion('personaje', 'ida');
+                setTimeout(() => {
+                    iniciarAnimacion('personaje', 'comidaSana');
+                    //reproducirAudio('baño');
+                }, 4000);
+                setTimeout(() => {resolve()}, 8200);
+            });
         }
     },
     'irAlBaño': {
         efecto: () => {
             establecerValorNecesidad('vejiga', 0);
+        },
+        proceso: () => {
+            return new Promise((resolve)=>{
+                iniciarAnimacion('personaje', 'ida');
+                setTimeout(() => {
+                    iniciarAnimacion('personaje', 'vuelta');
+                    //reproducirAudio('baño');
+                }, 7000);
+                setTimeout(() => {resolve()}, 11000);
+            });
         }
     },
     'jugarVideojuego': {
         efecto: () => {
             incrementarNecesidad('hambre', 20);
             reducirNecesidad('estres', 30);
+        },
+        proceso: () => {
+            return new Promise((resolve)=>{
+                iniciarAnimacion('personaje', 'quieto');
+                // iniciarAnimacion('pantalla', 'youtube');
+                setTimeout(() => {resolve()}, 10000);
+            });
         }
     },
     'mirarYouTube': {
         efecto: () => {
             reducirNecesidad('estres', 45);
+        },
+        proceso: () => {
+            return new Promise((resolve)=>{
+                iniciarAnimacion('personaje', 'quieto');
+                // iniciarAnimacion('pantalla', 'youtube');
+                setTimeout(() => {resolve()}, 10000);
+            });
         }
     },
     'hablarPorTelefono': {
         efecto: () => {
             reducirNecesidad('estres', 50);
-        }
+        },
+        proceso: (accion) => {
+            return new Promise((resolve) => {
+                iniciarAnimacion('personaje', 'telefono');
+                setTimeout(() => {resolve()}, 18000);
+            });
+        },
     },
 }
 
@@ -217,13 +266,34 @@ function menuPrincipalActivo() {
     return menuPrincipal.classList.contains(claseMenuActivo);
 }
 
+function deshabilitarBotones() {
+    const botones = document.querySelectorAll(`${contenedorControles} button`);
+    for (let boton of botones){
+        boton.setAttribute('disabled', true);
+    }
+}
+
+function habilitarBotones() {
+    const botones = document.querySelectorAll(`${contenedorControles} button`);
+    for (let boton of botones){
+        boton.removeAttribute('disabled');
+    }
+}
+
 function accionDeJuego(accion) {
     //Gestionar cola de acciones y animaciones desde acá
-    acciones[accion].efecto();
     if(! menuPrincipalActivo()) {
         cerrarMenusAbiertos();
         abrirMenu('principal');
     }
+    deshabilitarBotones();
+    realizandoAccion = true;
+    acciones[accion].efecto();
+    acciones[accion].proceso(accion).then(() => {
+        realizandoAccion = false;
+        habilitarBotones();
+        iniciarAnimacion('personaje', 'trabajando');
+    });
 }
 
 
@@ -241,7 +311,7 @@ function detenerTimerPrincipal() {
 }
 
 function iniciarTimerFinalDeDia(finDeDia) {
-    window.timerDia = window.setTimeout(finDeDia, 60000);
+    window.timerDia = window.setTimeout(finDeDia, 120000);
 }
 
 function detenerTimerDia() {
@@ -257,6 +327,45 @@ function detenerTimerDia() {
 //Importar Animación
 
 let nivelActual = 0;
+let estados = {
+    'equilibrio': {
+        animacion: 'trabajando',
+    },
+    'estres': {
+        animacion: 'barraLlenaEstres',
+    },
+    'hambre': {
+        animacion: 'barraLlenaHambre',
+    },
+    'vejiga': {
+        animacion: 'barraLlenaVejiga',
+    },
+};
+let estadoActual = 'equilibrio';
+
+function evaluarEstado() {
+    const medidores = document.querySelectorAll('.medidor > meter');
+    for (let medidor of medidores) {
+        if (medidor.value > 99) {
+            return {
+                estado: 'muerte',
+                causa: medidor.id.split('-')[1]
+            }
+        }
+        if (medidor.value > 85) {
+            return {
+                estado: 'alerta',
+                causa: medidor.id.split('-')[1]
+            };
+        }
+    }
+    return {estado: 'equilibrio'};
+}
+
+function adoptarEstado(estado) {
+    iniciarAnimacion('personaje', estados[estado].animacion);
+    //filtro de color
+}
 
 function iniciarNivel(idNivel) {
     nivelActual = idNivel;
@@ -268,8 +377,19 @@ function iniciarNivel(idNivel) {
 
 function tick() {
     for (let necesidad in necesidades) {
-        acumularNecesidad(necesidad, 2);
+        acumularNecesidad(necesidad, 1);
         reducirSaturacionNecesidad(necesidad, 0.5);
+    }
+    let estado = evaluarEstado().estado;
+
+    if (estado === 'muerte') {
+        return perderNivel(evaluarEstado().causa);
+    }
+
+    if (realizandoAccion) { return; }
+
+    if (estado === 'alerta' && estado !== estadoActual) {
+        adoptarEstado(evaluarEstado().causa);
     }
 }
 
@@ -285,7 +405,6 @@ function perderNivel(causa) {
     alert('perdiste! causa:', causa);
     detenerTimerPrincipal();
     detenerTimerDia();
-    iniciarNivel(0);
 }
 
 
