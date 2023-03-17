@@ -1,6 +1,6 @@
 # Programagotchi_72hs
 
-Código fuente de Programagotchi_72hs, un juego desarrollado para la Goto Gam Jam en noviembre de 2022. Desarrollado en HTML y Javascript.
+Código fuente de Programagotchi_72hs, juego desarrollado para la Goto Gam Jam en noviembre de 2022. Desarrollado en HTML y Javascript.
 
 ## Equipo APGames2022
 
